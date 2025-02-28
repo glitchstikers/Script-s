@@ -33,6 +33,8 @@ local CurrentVersion = LoadVersion()
 local Window = Rayfield:CreateWindow({
     Name = string.format("%s | %s | %s", CurrentName, CurrentGame, CurrentVersion),
     Icon = nil, -- Set a valid URL if needed
+   LoadingTitle = "Loading.. Shadowbyte 🌑",
+   LoadingSubtitle = "by shadow Team 🔥",
     Theme = "Dark"
 })
 
