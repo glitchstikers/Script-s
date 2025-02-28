@@ -59,10 +59,39 @@ HomeTab:CreateParagraph({
     Content = "If you get kicked or banned, it's **your responsibility**, not ours."
 })
 
--- **Main Tab**
-local mainTab = Window:CreateTab("🌟 Main")
-HomeTab:CreateSection("📌 teleport auto player")
 
+-- **Main Tab**
+local MainTab = Window:CreateTab("🌟 Main")
+MainTab:CreateSection("📌 Auto Teleport to Players")
+
+-- **Toggle for Auto-Teleport**
+local autoTP = false
+local teleporting = false
+
+MainTab:CreateToggle({
+    Name = "Auto Teleport to All Players",
+    Callback = function(state)
+        autoTP = state
+        if autoTP and not teleporting then
+            teleportLoop()
+        end
+    end
+})
+
+-- **Auto-Teleport Function**
+function teleportLoop()
+    teleporting = true
+    while autoTP do
+        for _, player in pairs(game:GetService("Players"):GetPlayers()) do
+            if not autoTP then break end -- Stop loop immediately when toggle is off
+            if player ~= game.Players.LocalPlayer and player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = player.Character.HumanoidRootPart.CFrame
+                task.wait(0.1) -- Wait before teleporting to the next player
+            end
+        end
+    end
+    teleporting = false
+end
 
 -- **Function to Check for Updates**
 local function CheckForUpdate()
