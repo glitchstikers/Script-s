@@ -54,7 +54,7 @@ if game.PlaceId == 4483381587 then
     -- **Function to Check for Updates**
     local function CheckForUpdate()
         local success, response = pcall(function()
-            return game:HttpGet("https://raw.githubusercontent.com/glitchstikers/Testscript-/main/Version.lua")
+            return game:HttpGet("https://raw.githubusercontent.com/glitchstikers/Script-s/refs/heads/main/A%20literal%20Baseplate/A%20literal%20Baseplate%20version%20update")
         end)
 
         if success and response then
