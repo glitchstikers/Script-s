@@ -59,6 +59,11 @@ HomeTab:CreateParagraph({
     Content = "If you get kicked or banned, it's **your responsibility**, not ours."
 })
 
+-- **Main Tab**
+local mainTab = Window:CreateTab("🌟 Main")
+HomeTab:CreateSection("📌 teleport auto player")
+
+
 -- **Function to Check for Updates**
 local function CheckForUpdate()
     local success, response = pcall(function()
