@@ -1,5 +1,4 @@
-if game.PlaceId == 4483381587 then
-    local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
+   local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 
     -- **Basic Information**
     local CurrentName = "🌑 Shadowbyte 🌑"
