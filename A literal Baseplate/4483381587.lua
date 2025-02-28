@@ -1,3 +1,4 @@
+-- **Load Rayfield UI Library**
 local success, Rayfield = pcall(function()
     return loadstring(game:HttpGet("https://sirius.menu/rayfield"))()
 end)
@@ -32,9 +33,6 @@ local CurrentVersion = LoadVersion()
 -- **Create UI Window**
 local Window = Rayfield:CreateWindow({
     Name = string.format("%s | %s | %s", CurrentName, CurrentGame, CurrentVersion),
-    Icon = nil, -- Set a valid URL if needed
-   LoadingTitle = "Loading.. Shadowbyte 🌑",
-   LoadingSubtitle = "by shadow Team 🔥",
     Theme = "Dark"
 })
 
@@ -59,20 +57,19 @@ HomeTab:CreateParagraph({
     Content = "If you get kicked or banned, it's **your responsibility**, not ours."
 })
 
-
 -- **Main Tab**
 local MainTab = Window:CreateTab("🌟 Main")
-MainTab:CreateSection("📌 Auto Teleport to Players")
+MainTab:CreateSection("📌 Auto Teleport & Chat System")
 
--- **Toggle for Auto-Teleport**
+-- **Auto Teleport Variables**
 local autoTP = false
-local teleporting = false
 
+-- **Auto Teleport Toggle**
 MainTab:CreateToggle({
     Name = "Auto Teleport to All Players",
     Callback = function(state)
         autoTP = state
-        if autoTP and not teleporting then
+        if autoTP then
             teleportLoop()
         end
     end
@@ -80,17 +77,15 @@ MainTab:CreateToggle({
 
 -- **Auto-Teleport Function**
 function teleportLoop()
-    teleporting = true
     while autoTP do
         for _, player in pairs(game:GetService("Players"):GetPlayers()) do
-            if not autoTP then break end -- Stop loop immediately when toggle is off
+            if not autoTP then return end -- Stop loop immediately when toggle is off
             if player ~= game.Players.LocalPlayer and player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
                 game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = player.Character.HumanoidRootPart.CFrame
-                task.wait(0.1) -- Wait before teleporting to the next player
+                task.wait(0) -- Wait before teleporting to the next player
             end
         end
     end
-    teleporting = false
 end
 
 -- **Function to Check for Updates**
@@ -100,7 +95,7 @@ local function CheckForUpdate()
     end)
 
     if success and response then
-        local LatestVersion = response:match("^%s*(.-)%s*$") -- Trim spaces/newlines
+        local LatestVersion = response:match("^%s*(.-)%s*$")
 
         if LatestVersion and LatestVersion ~= CurrentVersion then
             -- **Show Update Notification**
@@ -124,7 +119,7 @@ end
 task.spawn(function()
     while true do
         CheckForUpdate()
-        task.wait(30) -- Wait 30 seconds before checking again
+        task.wait(30) -- Check every 30 seconds
     end
 end)
 
